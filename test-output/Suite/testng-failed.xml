@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Failed suite [Suite]">
+  <listeners>
+    <listener class-name="OodlesDB.listeners"/>
+  </listeners>
+  <test name="Sales lead(failed)">
+    <classes>
+      <class name="OodlesDB.Salestest">
+        <methods>
+          <include name="edit"/>
+          <include name="teardown"/>
+          <include name="initialize"/>
+        </methods>
+      </class> <!-- OodlesDB.Salestest -->
+    </classes>
+  </test> <!-- Sales lead(failed) -->
+</suite> <!-- Failed suite [Suite] -->
