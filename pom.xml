@@ -43,7 +43,9 @@
 </dependency>
 
   
- <dependency>
+ 
+
+<dependency>
     <groupId>org.apache.logging.log4j</groupId>
     <artifactId>log4j-api</artifactId>
     <version>2.11.1</version>
@@ -69,6 +71,17 @@
   <scope>test</scope>
 </dependency>
 
+<dependency>
+    <groupId>com.aventstack</groupId>
+    <artifactId>extentreports</artifactId>
+    <version>3.0.6</version>
+</dependency>
+
+<dependency>
+    <groupId>com.relevantcodes</groupId>
+    <artifactId>extentreports</artifactId>
+    <version>2.41.2</version>
+</dependency>
 <dependency>
     <groupId>org.apache.poi</groupId>
   <artifactId>poi-ooxml</artifactId>

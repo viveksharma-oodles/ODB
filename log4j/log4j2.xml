@@ -1,15 +1,13 @@
 <Configuration status="WARN">
 <Properties>
-<Property name= "basepath">./logs</Property>
+<Property name= "basepath">./Logs</Property>
 </Properties>
   <Appenders>
   
-  <RollingFile name="RollingFile" fileName="$(basepath)/print.log" filePattern="logs/app-%d{MM-dd-yyyy}.log.gz"
+  <RollingFile name="File" fileName="$(basepath)/print.log" filePattern="$(basepath)/print-%d{MM-dd-yyyy}.log.gz"
                  ignoreExceptions="false">
-      <PatternLayout>
-        <Pattern>%d %p %c{1.} [%t] %m%n</Pattern>
-      </PatternLayout>
-      <TimeBasedTriggeringPolicy />
+                 
+                 <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
     </RollingFile>
     
     <Console name="Console" target="SYSTEM_OUT">
@@ -17,11 +15,12 @@
     </Console>
   </Appenders>
   <Loggers>
-  <Logger name="OodlesDB.ProjectTest" level="info" additivity="false">
+  <Logger name="OodlesDB.Salestest" level="info" additivity="false">
       <AppenderRef ref="Console"/>
     </Logger>
+    
     <Root level="trace">
-      <AppenderRef ref="file"/>
+      <AppenderRef ref="Console"/>
     </Root>
   </Loggers>
 </Configuration>

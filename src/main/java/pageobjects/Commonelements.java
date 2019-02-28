@@ -21,7 +21,8 @@ public abstract class Commonelements {
 		PageFactory.initElements(driver, this);
 	}
 	
-	@FindBy (linkText="Project")
+	@FindBy (xpath="/html[1]/body[1]/div[1]/div[1]/div[1]/div[1]/div[2]/div[1]/ul[1]/li[4]/a[1]")
+	public
 	WebElement Project;
 	
 	@FindBy (xpath="//a[contains(text(),'View Projects')]")
@@ -33,10 +34,9 @@ public abstract class Commonelements {
 	
 	@FindBy (xpath="//a[@class='blogHighlighted']")
 	WebElement blog;
-
 	
 	@FindBy (xpath="/html[1]/body[1]/div[1]/div[1]/div[1]/div[1]/div[2]/div[1]/ul[1]/li[5]/a[1]")
-	WebElement saleslead;
+	public WebElement saleslead;
 	
 	@FindBy (xpath="//a[contains(text(),'Leads')]")
 	WebElement leadoption;
@@ -72,6 +72,7 @@ public abstract class Commonelements {
 	 
 public WebElement clickonproject()
 {
+	
 	return Project;
 	
 
@@ -96,6 +97,7 @@ public WebElement clickonblog()
 }
 public WebElement clickonsaleslead()
 {
+	
 	
 	return saleslead;
 	

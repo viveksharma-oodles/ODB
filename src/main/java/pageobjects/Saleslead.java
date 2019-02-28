@@ -3,8 +3,8 @@ package pageobjects;
 import java.util.List;
 import java.util.Random;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
@@ -72,8 +72,8 @@ public class Saleslead extends Commonelements {
 	@FindBy(xpath = "//div[@class='col-md-12 col-xs-12 pull-left new-joineee']")
 	public WebElement Leadtable;
 
-	@FindBy(xpath = "//a[@title='Delete']")
-	List<WebElement> delete;
+	@FindBy(xpath = "//tbody[1]/tr[6]/td[17]/a[2]")
+	public WebElement delete;
 
 	@FindBy(xpath = "//a[@title='View Lead']")
 	List<WebElement> view;
@@ -158,6 +158,10 @@ public class Saleslead extends Commonelements {
 	@FindBy(xpath = "//input[@placeholder='Mobile']")
 	public WebElement Mobile;
 	
+	
+	@FindBy(xpath = "/html[1]/body[1]/div[1]/div[1]/div[2]/div[2]/div[4]/div[1]/div[1]/div[1]/div[1]/div[6]/div[3]/div[1]/ul[1]")
+	List<WebElement> Pagination;
+
 	@FindBy(xpath = "/html[1]/body[1]/div[1]/div[1]/div[2]/div[2]/div[3]/div[1]/div[1]/div[1]/div[1]/div[1]/div[5]/div[1]/div[1]/ul[1]")
 	List<WebElement> Pagination2;
 
@@ -165,10 +169,10 @@ public class Saleslead extends Commonelements {
 
 	// comment on sales dashboard page
 
-	@FindBy(xpath = "//div[@class='row selectyr']//tbody//tr[50]//td[5]")
+	@FindBy(xpath = "/html[1]/body[1]/div[1]/div[1]/div[2]/div[2]/div[4]/div[1]/div[1]/div[1]/div[1]/div[6]/table[1]/tbody[1]/tr[50]/td[5]")
 	public WebElement comment;
 
-	@FindBy(xpath = "//span[contains(text(),'Attached')]")
+	@FindBy(xpath = "//tbody//tr[4]//td[10]")
 	public WebElement commentonlead;
 
 	@FindBy(xpath = "//textarea[@placeholder='Write comment...']")
@@ -491,14 +495,16 @@ public class Saleslead extends Commonelements {
 	public void pagination() {
 
 		// wait until 'loader' loading
-		List<WebElement> pagination = driver
-				.findElements(By.xpath("/html[1]/body[1]/div[1]/div[1]/div[2]/div[2]/div[4]/div[1]/div[1]/div[1]/div[1]/div[6]/div[3]/div[1]/ul[1]"));
+//		List<WebElement> pagination = driver
+//				.findElements(By.xpath("/html[1]/body[1]/div[1]/div[1]/div[2]/div[2]/div[4]/div[1]/div[1]/div[1]/div[1]/div[6]/div[3]/div[1]/ul[1]"));
 		// Thread.sleep(5000);
-		if (pagination.size() > 0) {
-			System.out.println("pagination exists and size=" + pagination.size());
+		if (Pagination.size() > 0) {
+			System.out.println("pagination exists and size=" + Pagination.size());
 
-			for (int i = 0; i < pagination.size(); i++) {
-				pagination.get(i).click();
+			for (int i = 0; i < Pagination.size(); i++) {
+				Pagination.get(i).click();
+				break;
+
 			}
 		} else {
 			System.out.println("pagination not exists");
@@ -511,7 +517,8 @@ public class Saleslead extends Commonelements {
 		
 //		List<WebElement> pagination2 = driver
 //				.findElements(By.xpath("/html[1]/body[1]/div[1]/div[1]/div[2]/div[2]/div[3]/div[1]/div[1]/div[1]/div[1]/div[1]/div[5]/div[1]/div[1]/ul[1]"));
-		 Thread.sleep(5000);
+		 
+		Thread.sleep(5000);
 		if (Pagination2.size() > 0) {
 			System.out.println("pagination exists and size=" + Pagination2.size());
             
@@ -530,7 +537,12 @@ public class Saleslead extends Commonelements {
 
 	public void comment() {
 
-		comment.click();
+		//comment.sendKeys(Keys.ENTER);
+		WaitStattementLib wait= new WaitStattementLib();
+		wait.eWaitForClickable(driver, 5, comment);
+				
+		((JavascriptExecutor) driver).executeScript("arguments[0].click();", comment);
+
 		
 	}
 
@@ -539,8 +551,9 @@ public class Saleslead extends Commonelements {
 		JavascriptExecutor js = (JavascriptExecutor) driver;
 		js.executeScript("arguments[0].scrollIntoView();", commentonlead);
 		Thread.sleep(2000);
+		((JavascriptExecutor) driver).executeScript("arguments[0].click();", commentonlead);
 
-		commentonlead.click();
+		//commentonlead.click();
 
 	}
 
@@ -571,7 +584,7 @@ public class Saleslead extends Commonelements {
 //	WebDriverWait wait = new WebDriverWait(driver,20);
 //	wait.until(ExpectedConditions.visibilityOfElementLocated(By.linkText("Create Lead")));
 
-		createlead.click();
+		createlead.sendKeys(Keys.ENTER);
 		Thread.sleep(2000);
 		ClientName.sendKeys("Newlead3");
 		Email.sendKeys("lead3@mail.com");
@@ -598,18 +611,19 @@ public class Saleslead extends Commonelements {
 
 	}
 
+    
 	public void deletelead() throws InterruptedException {
-		JavascriptExecutor js = (JavascriptExecutor) driver;
+		
+		JavascriptExecutor js1 = (JavascriptExecutor) driver;
 		// ((JavascriptExecutor) driver).executeScript("window.scrollBy(0,500)");
-		js.executeScript("arguments[0].scrollIntoView();", delete);
-
+		js1.executeScript("arguments[0].scrollIntoView();", delete);
 		Thread.sleep(3000);
 
 		// String delete1="a[title='Delete']";
 
-		List<WebElement> a = driver.findElements(By.cssSelector("a[title='Delete']"));
+		List<WebElement> a1 = driver.findElements(By.cssSelector("a[title='Delete']"));
 
-		a.get(0).sendKeys(Keys.ENTER);
+		a1.get(0).sendKeys(Keys.ENTER);
 
 		deleteyes.click();
 		Thread.sleep(5000);
@@ -656,7 +670,9 @@ public class Saleslead extends Commonelements {
 //	selectMultiple.perform(); 
 	}
 
+	
 	public void editclient() throws InterruptedException {
+		
 		JavascriptExecutor js = (JavascriptExecutor) driver;
 		// ((JavascriptExecutor) driver).executeScript("window.scrollBy(0,500)");
 		js.executeScript("arguments[0].scrollIntoView();", edit);
@@ -681,17 +697,20 @@ public class Saleslead extends Commonelements {
 
 	public void salesquery() throws InterruptedException
 	{
-		
 		JavascriptExecutor js3 = (JavascriptExecutor) driver;
+		
 		// ((JavascriptExecutor) driver).executeScript("window.scrollBy(0,500)");	
 		js3.executeScript("arguments[0].scrollIntoView;", query);
 		
 		
+		
 		Thread.sleep(2000);
+
 		
 		WebElement ele =query.get(0);
 		((JavascriptExecutor) driver).executeScript("arguments[0].click();", ele);
 		
+			
 		Thread.sleep(3000);
 //		Random rnd = new Random();
 //		

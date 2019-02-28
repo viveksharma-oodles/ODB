@@ -13,6 +13,7 @@ import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.logging.LogEntries;
 import org.openqa.selenium.remote.DesiredCapabilities;
@@ -24,7 +25,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 public class Baseclass {
 	
 	public Properties prop;
-	public static WebDriver driver;    //driver can be accessible outside clas
+	public static WebDriver driver;    //driver can be accessible outside class
 	
 	public WebDriver initializedriver() throws IOException
 	{
@@ -36,15 +37,16 @@ public class Baseclass {
 	String browsername=prop.getProperty("browser");
 	
 	if (browsername.equals("chrome")){
-		System.setProperty("webdriver.chrome.driver","/home/vivek/Downloads/chromedriver");					
-         driver = new ChromeDriver();	
+		System.setProperty("webdriver.chrome.driver","/home/vivek/Downloads/chromedriver");	
+		
+         driver = new ChromeDriver();
 		
 	}
 	else if (browsername.equals("firefox")){
 		System.setProperty("webdriver.gecko.driver","/home/vivek/Downloads/geckodriver");
 		driver = new FirefoxDriver();
 	}
-	driver.manage().deleteAllCookies();
+	//driver.manage().deleteAllCookies();
 	driver.manage().timeouts().implicitlyWait(30,TimeUnit.SECONDS);
 	driver.manage().window().maximize();
 				
@@ -60,7 +62,7 @@ public class Baseclass {
 		File src=((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);    //driver must implement the TakesScreenshot interface  so as to use getscreenshot method 
 				                                                                //.thus Convert web driver object to TakeScreenshot
 		
-			FileUtils.copyDirectory(src, new File("/home/vivek/Shotfolder"+result+"screenshot.png"));
+			FileUtils.copyDirectory(src, new File("/home/vivek/Shotfolder/"+result+"screenshot.png"));
 	
 		
 		

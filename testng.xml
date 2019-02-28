@@ -5,24 +5,51 @@
 
 <listeners>
        <listener class-name="OodlesDB.listeners"/>
+       <listener class-name="resource.ExtentReporterNG"/>
   </listeners>
-  <test name="Sales lead">
+  
+  
+  <listeners>
+       <listener class-name="resource.MyTransformer"/>
+  </listeners>
+  
+   <test name="Sales lead">
     <classes>
+     
       <class name="OodlesDB.Salestest"/>
-      </classes>
-      </test>
       
-     <!-- <test name="test">
+    </classes>
+      </test>
+     
+     <test name="validatetitle">
       <classes>
       <class name="OodlesDB.validatetitle"/>
        </classes>
-      </test> -->
+      </test>
       
-      <!--<test name="test1">
-            <classes>
-      <class name="OodlesDB.Validdashboardhome"/>
+    <!--  <test name="Project module">
+   
+    <groups>
+    <run>
+    <exclude name="smoke"/>
+    </run>
+    </groups>
+    
+    <classes>
+      <class name="OodlesDB.ProjectTest">
+      
+      <methods>
+      <include name="verifyaddproject"/>
+      </methods>
+      
+      </class>
     </classes>
-  </test>--> 
+      </test>
+      
+      -->
+      
+      
+      
   <!-- Test -->
 </suite> <!-- Suite -->
         

@@ -1,18 +1,30 @@
 package pageobjects;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.Set;
+
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.Reporter;
+
+import resource.Excelutilities;
+import resource.WaitStattementLib;
+
+
 
 
 
@@ -37,6 +49,27 @@ public class Projects extends Commonelements {
 	
 	@FindBy (xpath="//input[@name='originalDate']")
 	WebElement Date;
+	
+	@FindBy (xpath="//input[@placeholder='search']")
+	WebElement searchfield;
+	
+	@FindBy (xpath="/html[1]/body[1]/div[1]/div[1]/div[2]/div[1]/div[3]/div[1]/div[1]/div[1]/div[7]/table[1]/tbody[2]/tr[1]/td[1]/table[1]/tbody[1]/tr[1]")
+	WebElement firstrow;
+	
+	@FindBy (xpath="/html[1]/body[1]/div[1]/div[1]/div[2]/div[1]/div[3]/div[1]/div[1]/div[1]/div[7]/table[1]/tbody[2]/tr[1]/td[1]/table[1]/tbody[1]/tr[1]/td[9]/div[1]/a[3]")
+	WebElement firstproject;
+	
+	@FindBy (xpath="/html[1]/body[1]/div[6]/div[1]/div[1]/div[1]/form[1]/div[1]/div[2]/div[1]/div[2]/input[1]")
+	WebElement EditProjectname;
+	
+	@FindBy (xpath="/html[1]/body[1]/div[6]/div[1]/div[1]/div[1]/form[1]/div[1]/div[2]/div[6]/div[3]/div[1]/div[1]/tags-input[1]/div[1]/div[1]/input[1]")
+	WebElement technology;
+	
+	@FindBy (xpath="//input[@placeholder='Add Team Leads']")
+	WebElement TeamLeads;
+	
+	@FindBy (xpath="//input[@placeholder='Add Team Members']")
+	WebElement Teammembers;
 	
 	@FindBy (xpath="//a[contains(text(),'26')]")
 	WebElement Clickdate;
@@ -63,7 +96,44 @@ public class Projects extends Commonelements {
      @FindBy (xpath="//li[@class='suggestion-item ng-scope ng-binding selected']")
      WebElement clientlist;
      
-	//input[contains(@placeholder,'Supervisor Email')]
+     @FindBy (xpath="/html[1]/body[1]/div[1]/div[1]/div[2]/div[1]/div[3]/div[1]/div[1]/div[1]/div[2]/div[1]/div[1]/select[1]")
+     WebElement pagedropdown;
+
+     
+     @FindBy (xpath="/html[1]/body[1]/div[1]/div[1]/div[2]/div[1]/div[3]/div[1]/div[1]/div[1]/div[7]/table[1]/tbody[2]/tr[1]/td[1]/table[1]/tbody[1]/tr[1]/td[9]/div[1]/div[1]/button[1]")
+     WebElement kabobmenu;
+     
+     @FindBy (xpath="/html[1]/body[1]/div[1]/div[1]/div[2]/div[1]/div[3]/div[1]/div[1]/div[1]/div[7]/table[1]/tbody[2]/tr[1]/td[1]/table[1]/tbody[1]/tr[1]/td[9]/div[1]/div[1]/ul[1]/li[1]/a[1]")
+     WebElement validateresource;
+     
+     @FindBy (xpath="/html[1]/body[1]/div[1]/div[1]/div[2]/div[1]/div[3]/div[1]/div[1]/div[1]/div[7]/table[1]/tbody[2]/tr[1]/td[1]/table[1]/tbody[1]/tr[1]/td[9]/div[1]/div[1]/ul[1]/li[3]/a[1]")
+     WebElement Deleteproject;
+     
+     @FindBy (xpath="/html[1]/body[1]/div[6]/div[1]/div[1]/form[1]/div[2]/button[2]")
+     WebElement Deleteyes;
+     
+     @FindBy (xpath="//tbody//tr[1]//td[1]//table[1]//tbody[1]//tr[1]//td[6]//a[1]")
+     WebElement statuschange;
+     
+     @FindBy (xpath="//input[@id='parentcheck']")
+     WebElement parentcheck;
+     
+     @FindBy (xpath="//input[contains(@placeholder,'Parent')]")
+     WebElement parentfield;
+     
+     @FindBy (xpath="/html[1]/body[1]/div[1]/div[1]/div[2]/div[1]/div[3]/div[1]/div[1]/div[1]/div[7]/table[1]/tbody[2]/tr[1]/td[1]/table[1]/tbody[1]/tr[1]/td[9]/div[1]/a[5]")
+     WebElement projectoverview;
+     
+     @FindBy (xpath="/html[1]/body[1]/div[1]/div[1]/div[2]/div[1]/div[3]/div[1]/div[1]/div[1]/div[2]/div[1]/div[2]/select[1]")
+     WebElement Projectstatusdropdwn;
+     
+     @FindBy (xpath="//table[1]/tbody[2]/tr[1]/td[1]/table[1]/tbody[1]/tr[1]/td[9]/div[1]/div[1]/ul[1]/li[2]/a[1]")
+    		 WebElement Salesdocument;
+     
+     @FindBy (xpath="/html[1]/body[1]/div[1]/div[1]/div[2]/div[1]/div[3]/div[1]/div[1]/div[1]/div[4]")
+     WebElement codereview;
+     
+     //input[contains(@placeholder,'Supervisor Email')]
 
 	public Projects(WebDriver driver) {
 		super(driver);
@@ -76,12 +146,136 @@ public class Projects extends Commonelements {
 	
 	 
 	 
-public WebElement clickonAddproject()
+public void clickonAddproject()
 {
-	return AddProject;
+	JavascriptExecutor executor = (JavascriptExecutor) driver;
+	executor.executeScript("arguments[0].click()", AddProject);
 	
 }
 
+public void validateresources()
+{
+	kabobmenu.click();
+	validateresource.click();
+	String expectedMessage = "The Institution is deleted Successfully!";
+	String message = driver.findElement(By.xpath("//div[contains(@class,'callout callout-success')]")).getText();
+	Assert.assertTrue(message.contains(expectedMessage), "Your error message");
+}
+
+public void statuschange()
+{
+	WaitStattementLib wait=new WaitStattementLib();
+	wait.eWaitForClickable(driver, 15, statuschange);
+	
+	((JavascriptExecutor)driver).executeScript("arguments[0].click();", statuschange);
+
+	WebElement message = driver.findElement(By.xpath("//div[@class='txtalignCenter positionABS inviteSent']"));
+	
+	Assert.assertEquals(message.getText(), "Status Changed Successfully");
+}
+
+public void search()
+{
+	 searchfield.sendKeys("LiveSource");
+	 
+	 WaitStattementLib wait= new WaitStattementLib();
+		wait.eWaitForVsibility(driver, 30, firstrow);
+		
+		String bodyText = driver.findElement(By.tagName("body")).getText();
+		Assert.assertTrue(bodyText.contains("LiveSource"), "Text not found!");
+		
+	}
+
+
+public void salesdocument()
+{
+	
+	WaitStattementLib wait= new WaitStattementLib();
+	wait.eWaitForClickable(driver, 15, kabobmenu);
+	kabobmenu.click();
+	Salesdocument.click();
+	
+	String mwh=driver.getWindowHandle();
+	Set s=driver.getWindowHandles(); //this method will gives you the handles of all opened windows
+
+	Iterator ite=s.iterator();
+
+	while(ite.hasNext())
+	{
+	    String popupHandle=ite.next().toString();
+	    if(!popupHandle.contains(mwh))
+	    {
+	        driver.switchTo().window(popupHandle);
+	        //here you can perform operation in pop-up window**
+	        //After finished your operation in pop-up just select the main window again
+	        driver.switchTo().window(mwh);
+	        log.info("sales pop up is opening");
+	    }
+	    else
+	    {
+	    	log.error("pop up is not opening");
+	    }
+	}
+}
+
+public void codereview()
+{
+	WaitStattementLib wait= new WaitStattementLib();
+	wait.eWaitForClickable(driver, 15, kabobmenu);
+	kabobmenu.click();
+	codereview.click();
+	
+	
+WebElement message = driver.findElement(By.xpath("//div[@class='txtalignCenter positionABS Red ng-hide']"));
+	
+    
+	Assert.assertEquals(message.getText(), "Project is now eligible for code review");
+	
+//	Actions action = new Actions(driver);
+//	 action.moveToElement(codereview).build().perform();
+//	 //WebElement toolTipEle = driver.findElement(By.xpath("//*[@id='ui-id-118']/div"));
+//	 // Get the Tool Tip Text
+//	 String toolTipTxt = codereview.getText();
+//	
+//	 if(toolTipTxt.contentEquals("Not Required for Code Review"))
+	  
+	
+}
+
+public void projectoverview()
+{
+	
+	String currentPageHandle = driver.getWindowHandle();
+	((JavascriptExecutor)driver).executeScript("arguments[0].click();", projectoverview);
+	//projectoverview.click();        
+
+	//Add Logic to Wait till Page Load 
+
+	// Get all Open Tabs
+	ArrayList<String> tabHandles = new ArrayList<String>(driver.getWindowHandles());
+
+	
+	for(String eachHandle : tabHandles)
+	{
+	    driver.switchTo().window(eachHandle);
+	    // Check Your Page Title 
+	    //WaitStattementLib wait= new WaitStattementLib();
+	    //wait.eWaitForVsibility(driver, 6, heading);
+	    
+	    
+	        driver.switchTo().window(currentPageHandle);
+	                  
+	    }
+	}
+
+
+public void deleteproject()
+{
+	kabobmenu.click();
+	Deleteproject.click();
+	Deleteyes.click();
+
+}
 public WebElement Projectname()
 {
 	return Projectname;
@@ -93,6 +287,10 @@ public WebElement Selectdate()
 	
 }
 
+public WebElement firstproject()
+{
+	return firstproject;
+}
 public WebElement Clickdate()
 {
 	return Clickdate;
@@ -116,56 +314,143 @@ public WebElement clientlist()
 	return clientlist;
 	
 }
+
+
+
+public void selectpagecount(String page) throws InterruptedException {
+	Select sel = new Select(pagedropdown);
+	sel.selectByVisibleText(page);
+}
+
+public void selectstatusdrpdwn(String status) {
+	Select sel = new Select(Projectstatusdropdwn);
+	sel.selectByVisibleText(status);
+}
 public void addproject() throws Exception
 {
-	System.out.println("Go to add project");
+	
 	//AddProject.click();
-	Projectname.sendKeys("DSLR");
+	String name = Excelutilities.readData("Add project", 0, 0);
+	Projectname.sendKeys(name);
+	log.info("Project name is entered");
+
 	Date.click();
+	
 	Thread.sleep(2000);
-	Clickdate.click();
+	Clickdate.sendKeys(Keys.ENTER);
+	log.info("Date is entered");
+
 	//log.info("click on date");
 	
 	
 	
 	//((JavascriptExecutor)driver).executeScript("document.getElementsByName('originalDate').setAttribute('value','19-01-2019')");
 
-	
-
-	
-//	WebElement DT=driver.findElement(By.xpath("//a[@class='ui-state-default'][contains(text(),'19')]"));
+	//	WebElement DT=driver.findElement(By.xpath("//a[@class='ui-state-default'][contains(text(),'19')]"));
 //	DT.click();
 	
 
 	
 	Next.click();
-	client.sendKeys("time");
+	String clientname = Excelutilities.readData("Add project", 0, 1);
+
+	client.sendKeys(clientname);
 	//clientlist.click();
 	Thread.sleep(2000);
+	client.sendKeys(Keys.ARROW_DOWN);
+	client.sendKeys(Keys.ENTER);
 	
-	WebElement element = driver.findElement(By.xpath("//li[@class='suggestion-item ng-scope ng-binding selected']"));
-	((JavascriptExecutor)driver).executeScript("arguments[0].click();", element);
+	log.info("CLient name is entered");
 
-   //client.sendKeys(Keys.ENTER);
+	
+//	WebElement element = driver.findElement(By.xpath("//li[@class='suggestion-item ng-scope ng-binding selected']"));
+//	((JavascriptExecutor)driver).executeScript("arguments[0].click();", element);
+
 	
 	Next.click();
-	
-	Manager.sendKeys("A");
+	String manager = Excelutilities.readData("Add project", 0, 2);
+
+	Manager.sendKeys(manager);
+//	Thread.sleep(2000);
+//	WebElement element1 = driver.findElement(By.xpath("//li[@class='suggestion-item ng-scope ng-binding selected']"));
+//	((JavascriptExecutor)driver).executeScript("arguments[0].click();", element1);
+	Manager.sendKeys(Keys.DOWN);
+	Manager.sendKeys(Keys.ENTER);
+
+	log.info("manager name is entered");
+
+	Next.click();
+	log.info("Next button is clicked");
 	Thread.sleep(2000);
-	WebElement element1 = driver.findElement(By.xpath("//li[@class='suggestion-item ng-scope ng-binding selected']"));
-	((JavascriptExecutor)driver).executeScript("arguments[0].click();", element);
-	//Manager.sendKeys(Keys.ENTER);
-	
-	Next.click();
-
 	Submit.click();
+	log.info("Submit button is clicked");
+
 
 	
 	
 	
 }
 
+public void editproject()
+{
+	parentcheck.click();
+	parentfield.clear();
+	parentfield.sendKeys("g");
+	parentfield.sendKeys(Keys.ARROW_DOWN);
+	parentfield.sendKeys(Keys.ENTER);
+	
+EditProjectname.clear();
+EditProjectname.sendKeys("DSLR2");
+Date.click();
+//Thread.sleep(2000);
+Clickdate.click();
+//log.info("click on date");
 
+technology.sendKeys("b");
+technology.sendKeys(Keys.DOWN);
+technology.sendKeys(Keys.ENTER);
+
+//((JavascriptExecutor)driver).executeScript("document.getElementsByName('originalDate').setAttribute('value','19-01-2019')");
+
+
+
+
+//WebElement DT=driver.findElement(By.xpath("//a[@class='ui-state-default'][contains(text(),'19')]"));
+//DT.click();
+
+
+
+Next.click();
+//client.sendKeys("time");
+//Thread.sleep(2000);
+//	
+//WebElement element = driver.findElement(By.xpath("//li[@class='suggestion-item ng-scope ng-binding selected']"));
+//((JavascriptExecutor)driver).executeScript("arguments[0].click();", element);
+//
+//   
+//	
+Next.click();
+
+//Manager.sendKeys("A");
+//Thread.sleep(2000);
+//WebElement element1 = driver.findElement(By.xpath("//li[@class='suggestion-item ng-scope ng-binding selected']"));
+//((JavascriptExecutor)driver).executeScript("arguments[0].click();", element);
+TeamLeads.sendKeys("k");
+TeamLeads.sendKeys(Keys.ARROW_DOWN);
+TeamLeads.sendKeys(Keys.ENTER);
+
+Teammembers.sendKeys("j");
+Teammembers.sendKeys(Keys.ARROW_DOWN);
+Teammembers.sendKeys(Keys.ENTER);
+
+Teammembers.sendKeys("l");
+Teammembers.sendKeys(Keys.ARROW_DOWN);
+Teammembers.sendKeys(Keys.ENTER);
+Next.click();
+//
+Submit.click();
+
+}
 
 
 }

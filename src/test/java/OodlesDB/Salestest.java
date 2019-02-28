@@ -2,47 +2,31 @@ package OodlesDB;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.InterruptedIOException;
-import java.util.Set;
-import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.logging.LogEntries;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
-import org.testng.Assert;
 import org.testng.ITestResult;
-import org.testng.Reporter;
 import org.testng.annotations.AfterMethod;
-import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
-//import com.actitime.generic.Excelutilities;
-
-import junit.awtui.Logo;
-import net.bytebuddy.implementation.bind.annotation.BindingPriority;
 import pageobjects.Landingpage;
-import pageobjects.Projects;
 import pageobjects.Saleslead;
 import resource.Baseclass;
 import resource.Excelutilities;
 import resource.WaitStattementLib;
 
-public class Salestest extends Baseclass {
+public class Salestest extends Baseclass  {
 
-	public static Logger log = LogManager.getLogger(Salestest.class.getName());
+private static Logger log = LogManager.getLogger(Salestest.class.getName());
 
+	
 	WebDriver driver;
 
 	@BeforeMethod
@@ -56,12 +40,15 @@ public class Salestest extends Baseclass {
 		log.info("navigated to homepage");
 
 	}
-
+	
+	@Test(enabled=false)
 	public void verifymonthlyleadsbyyear() throws IOException, InterruptedException {
 		Landingpage lp = new Landingpage(driver);
 		lp.login();
 
 		Saleslead Sl = new Saleslead(driver);
+		WaitStattementLib wait=new WaitStattementLib();
+		wait.eWaitForClickable(driver, 5, Sl.saleslead);
 		Sl.clickonsaleslead().click();
 		log.info("Clicked on SL");
 
@@ -94,12 +81,15 @@ public class Salestest extends Baseclass {
 		}
 
 	}
-
+	
+	@Test(enabled=false)
 	public void verifymonthlyleadbysource() throws InterruptedException {
 		Landingpage lp = new Landingpage(driver);
 		lp.login();
 
 		Saleslead Sl = new Saleslead(driver);
+		WaitStattementLib wait=new WaitStattementLib();
+		wait.eWaitForClickable(driver, 5, Sl.saleslead);
 		Sl.clickonsaleslead().click();
 		log.info("Clicked on SL");
 
@@ -133,16 +123,17 @@ public class Salestest extends Baseclass {
 		Sl.selectsource("IVR");
 
 	}
-
+	
+	@Test(enabled=false)
 	public void clickpage() throws InterruptedException {
 		Landingpage lp = new Landingpage(driver);
 		lp.login();
 		log.info("Login successful");
 
 		Saleslead Sl = new Saleslead(driver);
-		Sl.clickonsaleslead().click();
+		Sl.clickonsaleslead();
 		log.info("Clicked on SL");
-
+        
 		Sl.clickonlead().click();
 		log.info("Clicked on lead option");
 		JavascriptExecutor executor = (JavascriptExecutor) driver;
@@ -158,13 +149,16 @@ public class Salestest extends Baseclass {
 		Sl.selectpagecount("Show 10 per page");
 
 	}
-
+	
+	@Test(enabled=false)
 	public void statusfilter() throws InterruptedException {
 		Landingpage lp = new Landingpage(driver);
 		lp.login();
 		log.info("Login successful");
 
 		Saleslead Sl = new Saleslead(driver);
+		WaitStattementLib wait=new WaitStattementLib();
+		wait.eWaitForClickable(driver, 5, Sl.saleslead);
 		Sl.clickonsaleslead().click();
 		log.info("Clicked on SL");
 
@@ -172,21 +166,25 @@ public class Salestest extends Baseclass {
 		log.info("Clicked on lead option");
 		JavascriptExecutor executor = (JavascriptExecutor) driver;
 		executor.executeScript("arguments[0].click()", Sl.leadstab);
-		Sl.leadstab().click();
-
+		
+		//Sl.leadstab().click();
+         Thread.sleep(2000);
 		Sl.selectstatus("Open");
 		Thread.sleep(2000);
 		Sl.selectstatus("Closed");
 		Thread.sleep(2000);
 		Sl.selectstatus("Acquired");
 	}
-
+	
+	@Test(enabled=false)
 	public void rangefilter() throws InterruptedException {
 		Landingpage lp = new Landingpage(driver);
 		lp.login();
 		log.info("Login successful");
 
 		Saleslead Sl = new Saleslead(driver);
+		WaitStattementLib wait=new WaitStattementLib();
+		wait.eWaitForClickable(driver, 5, Sl.saleslead);
 		Sl.clickonsaleslead().click();
 		log.info("Clicked on SL");
 
@@ -200,13 +198,13 @@ public class Salestest extends Baseclass {
 		Sl.selectrange("Today");
 		Thread.sleep(2000);
 
-		Sl.selectrange("Tommorow");
+		Sl.selectrange("Yesterday");
 		Thread.sleep(2000);
 
-		Sl.selectrange("This week");
+		Sl.selectrange("This Week");
 		Thread.sleep(2000);
 
-		Sl.selectrange("This month");
+		Sl.selectrange("This Month");
 		Thread.sleep(2000);
 
 		Sl.selectrange("Custom Dates");
@@ -214,14 +212,17 @@ public class Salestest extends Baseclass {
 
 	}
 
-
-	public void leadstypefilter() throws InterruptedException {
+	
+	           void leadstypefilter() throws InterruptedException {
 
 		Landingpage lp = new Landingpage(driver);
 		lp.login();
 		log.info("Login successful");
 
 		Saleslead Sl = new Saleslead(driver);
+		
+		WaitStattementLib wait=new WaitStattementLib();
+		wait.eWaitForClickable(driver, 5, Sl.saleslead);
 
 		Sl.clickonsaleslead().click();
 		log.info("Clicked on SL");
@@ -245,13 +246,16 @@ public class Salestest extends Baseclass {
 //		Thread.sleep(2000);
 		Sl.leadstype("Lancer Leads");
 	}
-
+	  
+	@Test(enabled=false)
 	public void codefilter() throws InterruptedException {
 		Landingpage lp = new Landingpage(driver);
 		lp.login();
 		log.info("Login successful");
 
 		Saleslead Sl = new Saleslead(driver);
+		WaitStattementLib wait=new WaitStattementLib();
+		wait.eWaitForClickable(driver, 5, Sl.saleslead);
 		Sl.clickonsaleslead().click();
 		log.info("Clicked on SL");
 
@@ -277,7 +281,8 @@ public class Salestest extends Baseclass {
 		Thread.sleep(2000);
 
 	}
-
+	
+	@Test(enabled=false)
 	public void verifytableispresent() throws InterruptedException {
 
 		Landingpage lp = new Landingpage(driver);
@@ -285,6 +290,8 @@ public class Salestest extends Baseclass {
 		log.info("Login successful");
 
 		Saleslead Sl = new Saleslead(driver);
+		WaitStattementLib wait=new WaitStattementLib();
+		wait.eWaitForClickable(driver, 5, Sl.saleslead);
 		Sl.clickonsaleslead().click();
 		log.info("Clicked on SL");
 
@@ -297,7 +304,7 @@ public class Salestest extends Baseclass {
 
 		Thread.sleep(2000);
 
-		if (((WebElement) Sl.Leadtable()).isDisplayed()) {
+		if (Sl.Leadtable().isDisplayed()) {
 
 			log.info("Table is Visible");
 		} else {
@@ -307,7 +314,7 @@ public class Salestest extends Baseclass {
 
 	}
 
-	
+	@Test(enabled=false)
 	public void verifyPagination() throws InterruptedException {
 
 		Landingpage lp = new Landingpage(driver);
@@ -315,6 +322,8 @@ public class Salestest extends Baseclass {
 		log.info("Login successful");
 
 		Saleslead Sl = new Saleslead(driver);
+		WaitStattementLib wait=new WaitStattementLib();
+		wait.eWaitForClickable(driver, 5, Sl.saleslead);
 		Sl.clickonsaleslead().click();
 		log.info("Clicked on SL");
 
@@ -325,19 +334,23 @@ public class Salestest extends Baseclass {
 		JavascriptExecutor jse = (JavascriptExecutor) driver;
 		jse.executeScript("window.scrollTo(0, document.body.scrollHeight);");
 
+		Thread.sleep(2000);
 		Sl.pagination();
 		log.info("Pagination working");
 		// Thread.sleep(2000);
 
 	}
-
-	@Test
+	
+	@Test(enabled=false)
 	public void verifyPaginationonleadpage() throws InterruptedException {
 		Landingpage lp = new Landingpage(driver);
 		lp.login();
 		log.info("Login successful");
 
 		Saleslead Sl = new Saleslead(driver);
+		WaitStattementLib wait=new WaitStattementLib();
+		wait.eWaitForClickable(driver, 5, Sl.saleslead);
+		
 		Sl.clickonsaleslead().click();
 		log.info("Clicked on SL");
 
@@ -360,7 +373,8 @@ public class Salestest extends Baseclass {
 		Sl.pagination2();
 		log.info("Pagination working");
 	}
-
+	
+	@Test(priority=1)
 	public void verifyaddlead() throws InterruptedException
 
 	{
@@ -368,16 +382,19 @@ public class Salestest extends Baseclass {
 		lp.login();
 		log.info("Login successful");
 
+		
 		Saleslead Sl = new Saleslead(driver);
-//	    Sl.NewLead();
+		WaitStattementLib wait=new WaitStattementLib();
+		wait.eWaitForClickable(driver, 10, Sl.saleslead);
+
 		Sl.clickonsaleslead().click();
 		log.info("Clicked on SL");
-
+//	    Sl.NewLead();
 		Sl.clickonlead().click();
 		log.info("Clicked on lead option");
 
-		JavascriptExecutor executor = (JavascriptExecutor) driver;
-		executor.executeScript("arguments[0].click()", Sl.leadstab);
+//		JavascriptExecutor executor = (JavascriptExecutor) driver;
+//		executor.executeScript("arguments[0].click()", Sl.leadstab);
 
 		Sl.leadstab().click();
 		log.info("Clicked on leads tab");
@@ -402,13 +419,18 @@ public class Salestest extends Baseclass {
 		log.info("lead added");
 
 	}
-
+	
+	@Test(priority=6)
 	public void clickcomment() throws InterruptedException {
 		Landingpage lp = new Landingpage(driver);
 		lp.login();
 		log.info("Login successful");
 
 		Saleslead Sl = new Saleslead(driver);
+		WaitStattementLib wait=new WaitStattementLib();
+		wait.eWaitForClickable(driver, 5, Sl.saleslead);
+		
+		
 		Sl.clickonsaleslead().click();
 		log.info("Clicked on SL");
 
@@ -418,19 +440,22 @@ public class Salestest extends Baseclass {
 		JavascriptExecutor jse = (JavascriptExecutor) driver;
 		jse.executeScript("window.scrollTo(0, document.body.scrollHeight);");
 
+		Thread.sleep(2000);
 		Sl.comment();
 		String Test = Excelutilities.readData("sales", 1, 0);
 
 		Sl.writecomment(Test);
 		Sl.submitcomment().sendKeys(Keys.ENTER);
 	}
-
+	@Test(priority=6)
 	public void showcolumns() throws InterruptedException {
 		Landingpage lp = new Landingpage(driver);
 		lp.login();
 		log.info("Login successful");
 
 		Saleslead Sl = new Saleslead(driver);
+		WaitStattementLib wait=new WaitStattementLib();
+		wait.eWaitForClickable(driver, 5, Sl.saleslead);
 		
 		Sl.clickonsaleslead().click();
 		log.info("Clicked on SL");
@@ -439,19 +464,27 @@ public class Salestest extends Baseclass {
 		log.info("Clicked on lead option");
 
 		Sl.leadstab().click();
+		
+		WaitStattementLib wait1= new WaitStattementLib();
+		wait1.eWaitForClickable(driver, 5, Sl.Showhidedrpdwn);
 		Sl.Showhidedrpdwn.click();
 		
 		Sl.showhide();
 	}
-
+	
+	@Test(priority=6)
 	public void clickcommentonleadspage() throws InterruptedException {
 
 		Landingpage lp = new Landingpage(driver);
 		lp.login();
 		log.info("Login successful");
+		
 
 		Saleslead Sl = new Saleslead(driver);
-
+		WaitStattementLib wait=new WaitStattementLib();
+		wait.eWaitForClickable(driver, 5, Sl.saleslead);
+		
+		//Thread.sleep(3000);
 		Sl.clickonsaleslead().click();
 		log.info("Clicked on SL");
 
@@ -468,13 +501,16 @@ public class Salestest extends Baseclass {
 		Sl.writecomment(Test);
 		Sl.submitcomment().sendKeys(Keys.ENTER);
 	}
-
+	
+	@Test(priority=6)
 	public void searchfilter() throws InterruptedException {
 		Landingpage lp = new Landingpage(driver);
 		lp.login();
 		log.info("Login successful");
 
 		Saleslead Sl = new Saleslead(driver);
+		WaitStattementLib wait=new WaitStattementLib();
+		wait.eWaitForClickable(driver, 5, Sl.saleslead);
 		Sl.clickonsaleslead().click();
 		log.info("Clicked on SL");
 
@@ -485,14 +521,18 @@ public class Salestest extends Baseclass {
 
 		String input = Excelutilities.readData("sales", 0, 0);
 		Sl.searchlead(input);
+		log.info("input is entered");
 	}
-
+    
+	@Test(priority=6)
 	public void searchtech() throws InterruptedException {
 		Landingpage lp = new Landingpage(driver);
 		lp.login();
 		log.info("Login successful");
 
 		Saleslead Sl = new Saleslead(driver);
+		WaitStattementLib wait=new WaitStattementLib();
+		wait.eWaitForClickable(driver, 5, Sl.saleslead);
 		Sl.clickonsaleslead().click();
 		log.info("Clicked on SL");
 
@@ -504,13 +544,17 @@ public class Salestest extends Baseclass {
 		String input = Excelutilities.readData("Techinvoke", 0, 0);
 		Sl.searchtech(input);
 	}
-    
+	
+	@Test(priority=2)
 	public void edit() throws InterruptedException {
 		Landingpage lp = new Landingpage(driver);
 		lp.login();
 		log.info("Login successful");
 
 		Saleslead Sl = new Saleslead(driver);
+		
+		WaitStattementLib wait=new WaitStattementLib();
+		wait.eWaitForClickable(driver, 5, Sl.saleslead);
 		
 		Sl.clickonsaleslead().click();
 		log.info("Clicked on SL");
@@ -521,13 +565,16 @@ public class Salestest extends Baseclass {
 
 		Sl.editclient();
 	}
-
+	
+	@Test(priority=3)
 	public void deletelead() throws InterruptedException {
 		Landingpage lp = new Landingpage(driver);
 		lp.login();
 		log.info("Login successful");
 
 		Saleslead Sl = new Saleslead(driver);
+		WaitStattementLib wait=new WaitStattementLib();
+		wait.eWaitForClickable(driver, 5, Sl.saleslead);
 
 		Sl.clickonsaleslead().click();
 		log.info("Clicked on SL");
@@ -536,10 +583,12 @@ public class Salestest extends Baseclass {
 		log.info("Clicked on lead option");
 
 		Sl.leadstab().click();
+		
 		Sl.deletelead();
 
 	}
-
+	
+	@Test(priority=4)
 	public void viewlead() throws InterruptedException {
 
 		Landingpage lp = new Landingpage(driver);
@@ -547,7 +596,8 @@ public class Salestest extends Baseclass {
 		log.info("Login successful");
 
 		Saleslead Sl = new Saleslead(driver);
-
+		WaitStattementLib wait=new WaitStattementLib();
+		wait.eWaitForClickable(driver, 5, Sl.saleslead);
 		Sl.clickonsaleslead().click();
 		log.info("Clicked on SL");
 
@@ -558,7 +608,7 @@ public class Salestest extends Baseclass {
 		Sl.viewlead();
 
 	}
-
+	@Test(priority=5)
 	public void leadquality() throws InterruptedException {
 		Landingpage lp = new Landingpage(driver);
 		lp.login();
@@ -567,7 +617,8 @@ public class Salestest extends Baseclass {
 		Saleslead Sl = new Saleslead(driver);
 
 		Thread.sleep(2000);
-
+		WaitStattementLib wait=new WaitStattementLib();
+		wait.eWaitForClickable(driver, 5, Sl.saleslead);
 		Sl.clickonsaleslead().click();
 		log.info("Clicked on SL");
 
@@ -577,15 +628,17 @@ public class Salestest extends Baseclass {
 		Sl.leadquality();
 
 	}
-
+	
 	public void salesquery() throws InterruptedException {
 		Landingpage lp = new Landingpage(driver);
 		lp.login();
 		log.info("Login successful");
 
 		Saleslead Sl = new Saleslead(driver);
-
-		Thread.sleep(2000);
+		WaitStattementLib wait=new WaitStattementLib();
+		wait.eWaitForClickable(driver, 5, Sl.saleslead);
+		
+		//Thread.sleep(2000);
 
 		Sl.clickonsaleslead().click();
 		log.info("Clicked on SL");
@@ -600,32 +653,34 @@ public class Salestest extends Baseclass {
 
 		Thread.sleep(4000);
 		Sl.leadstab().click();
+		log.info("Clicked on leadtab");
+
 
 		Sl.salesquery();
-	}
+			}
 
-//	@AfterMethod
-//
-//	public void screenShot(ITestResult result) {
-//		// using ITestResult.FAILURE is equals to result.getStatus then it enter into if
-//		// condition
-//		if (ITestResult.FAILURE == result.getStatus()) {
-//			try {
-//				// To create reference of TakesScreenshot
-//				TakesScreenshot screenshot = (TakesScreenshot) driver;
-//				// Call method to capture screenshot
-//				File src = screenshot.getScreenshotAs(OutputType.FILE);
-//				// Copy files to specific location
-//				// result.getName() will return name of test case so that screenshot name will
-//				// be same as test case name
-//				FileUtils.copyFile(src, new File("/home/vivek/Shotfolder/" + result.getName() + ".png"));
-//				System.out.println("Successfully captured a screenshot");
-//			} catch (Exception e) {
-//				System.out.println("Exception while taking screenshot " + e.getMessage());
-//			}
-//		}
-//		driver.close();
-//
-//	}
+	@AfterMethod
+
+	public void screenShot(ITestResult result) {
+		// using ITestResult.FAILURE is equals to result.getStatus then it enter into if
+		// condition
+		if (ITestResult.FAILURE == result.getStatus()) {
+			try {
+				// To create reference of TakesScreenshot
+				TakesScreenshot screenshot = (TakesScreenshot) driver;
+				// Call method to capture screenshot
+				File src = screenshot.getScreenshotAs(OutputType.FILE);
+				// Copy files to specific location
+				// result.getName() will return name of test case so that screenshot name will
+				// be same as test case name
+				FileUtils.copyFile(src, new File("/home/vivek/Shotfolder/" + result.getName() + ".png"));
+				System.out.println("Successfully captured a screenshot");
+			} catch (Exception e) {
+				System.out.println("Exception while taking screenshot " + e.getMessage());
+			}
+		}
+		driver.close();
+
+	}
 
 }

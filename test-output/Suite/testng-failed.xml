@@ -2,17 +2,48 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="Failed suite [Suite]">
   <listeners>
-    <listener class-name="OodlesDB.listeners"/>
+    <listener class-name="resource.MyTransformer"/>
   </listeners>
   <test name="Sales lead(failed)">
     <classes>
+      <class name="OodlesDB.validatetitle">
+        <methods>
+          <include name="initialize"/>
+        </methods>
+      </class> <!-- OodlesDB.validatetitle -->
       <class name="OodlesDB.Salestest">
         <methods>
           <include name="edit"/>
-          <include name="teardown"/>
+          <include name="leadquality"/>
+          <include name="showcolumns"/>
+          <include name="viewlead"/>
+          <include name="clickcommentonleadspage"/>
+          <include name="verifyaddlead"/>
+          <include name="searchfilter"/>
+          <include name="searchtech"/>
           <include name="initialize"/>
+          <include name="screenShot"/>
+          <include name="clickcomment"/>
+          <include name="deletelead"/>
         </methods>
       </class> <!-- OodlesDB.Salestest -->
     </classes>
   </test> <!-- Sales lead(failed) -->
+  <test name="validatetitle(failed)">
+    <classes>
+      <class name="OodlesDB.validatetitle">
+        <methods>
+          <include name="initialize"/>
+          <include name="navigation2"/>
+          <include name="navigation1"/>
+        </methods>
+      </class> <!-- OodlesDB.validatetitle -->
+      <class name="OodlesDB.Salestest">
+        <methods>
+          <include name="initialize"/>
+          <include name="screenShot"/>
+        </methods>
+      </class> <!-- OodlesDB.Salestest -->
+    </classes>
+  </test> <!-- validatetitle(failed) -->
 </suite> <!-- Failed suite [Suite] -->
