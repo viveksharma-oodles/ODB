@@ -3,10 +3,12 @@ package pageobjects;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Set;
 
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
+import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
@@ -100,7 +102,7 @@ public class Projects extends Commonelements {
      WebElement pagedropdown;
 
      
-     @FindBy (xpath="/html[1]/body[1]/div[1]/div[1]/div[2]/div[1]/div[3]/div[1]/div[1]/div[1]/div[7]/table[1]/tbody[2]/tr[1]/td[1]/table[1]/tbody[1]/tr[1]/td[9]/div[1]/div[1]/button[1]")
+     @FindBy (xpath="//tr[1]//td[1]//table[1]//tbody[1]//tr[1]//td[9]//div[1]//div[1]//div[1]//button[1]")
      WebElement kabobmenu;
      
      @FindBy (xpath="/html[1]/body[1]/div[1]/div[1]/div[2]/div[1]/div[3]/div[1]/div[1]/div[1]/div[7]/table[1]/tbody[2]/tr[1]/td[1]/table[1]/tbody[1]/tr[1]/td[9]/div[1]/div[1]/ul[1]/li[1]/a[1]")
@@ -127,11 +129,16 @@ public class Projects extends Commonelements {
      @FindBy (xpath="/html[1]/body[1]/div[1]/div[1]/div[2]/div[1]/div[3]/div[1]/div[1]/div[1]/div[2]/div[1]/div[2]/select[1]")
      WebElement Projectstatusdropdwn;
      
-     @FindBy (xpath="//table[1]/tbody[2]/tr[1]/td[1]/table[1]/tbody[1]/tr[1]/td[9]/div[1]/div[1]/ul[1]/li[2]/a[1]")
+     @FindBy (xpath="//div[@class='dropdown open']//a[@title='Legal Documents']")
     		 WebElement Salesdocument;
      
-     @FindBy (xpath="/html[1]/body[1]/div[1]/div[1]/div[2]/div[1]/div[3]/div[1]/div[1]/div[1]/div[4]")
+     @FindBy (xpath="/html[1]/body[1]/div[1]/div[1]/div[2]/div[1]/div[3]/div[1]/div[1]/div[1]/div[7]/table[1]/tbody[2]/tr[1]/td[1]/table[1]/tbody[1]/tr[1]/td[9]/div[1]/a[2]")
      WebElement codereview;
+     
+     @FindBy (xpath="//tr[1]//td[1]//table[1]//tbody[1]//tr[1]//td[8]//table[1]//tbody[1]//tr[1]//td[2]//a[1]")
+     WebElement resourcecount;
+
+	public int count;
      
      //input[contains(@placeholder,'Supervisor Email')]
 
@@ -153,6 +160,10 @@ public void clickonAddproject()
 	
 }
 
+public WebElement resourcecount()
+{
+	return resourcecount;
+}
 public void validateresources()
 {
 	kabobmenu.click();
@@ -187,49 +198,49 @@ public void search()
 	}
 
 
-public void salesdocument()
+public void salesdocument() throws InterruptedException
 {
 	
-	WaitStattementLib wait= new WaitStattementLib();
-	wait.eWaitForClickable(driver, 15, kabobmenu);
-	kabobmenu.click();
-	Salesdocument.click();
+//	WaitStattementLib wait= new WaitStattementLib();
+//	wait.eWaitForClickable(driver, 15, kabobmenu);
+	//kabobmenu.click();
+	((JavascriptExecutor)driver).executeScript("arguments[0].click();", kabobmenu);
 	
-	String mwh=driver.getWindowHandle();
-	Set s=driver.getWindowHandles(); //this method will gives you the handles of all opened windows
+	Thread.sleep(2000);
 
-	Iterator ite=s.iterator();
+	((JavascriptExecutor)driver).executeScript("arguments[0].click();", Salesdocument);
 
-	while(ite.hasNext())
-	{
-	    String popupHandle=ite.next().toString();
-	    if(!popupHandle.contains(mwh))
-	    {
-	        driver.switchTo().window(popupHandle);
-	        //here you can perform operation in pop-up window**
-	        //After finished your operation in pop-up just select the main window again
-	        driver.switchTo().window(mwh);
-	        log.info("sales pop up is opening");
-	    }
-	    else
-	    {
-	    	log.error("pop up is not opening");
-	    }
-	}
+	//Salesdocument.click();
+//    Alert alert = driver.switchTo().alert();
+    
+    System.out.println(driver.switchTo().alert().getText());
+
+	
+	driver.switchTo().alert().dismiss();
+
 }
 
-public void codereview()
+public void codereview() throws InterruptedException
 {
 	WaitStattementLib wait= new WaitStattementLib();
-	wait.eWaitForClickable(driver, 15, kabobmenu);
-	kabobmenu.click();
-	codereview.click();
+//	wait.eWaitForClickable(driver, 30, kabobmenu);
+	
+//	kabobmenu.click();
+	
+	((JavascriptExecutor)driver).executeScript("arguments[0].click();", codereview);
+
+	//codereview.click();
 	
 	
-WebElement message = driver.findElement(By.xpath("//div[@class='txtalignCenter positionABS Red ng-hide']"));
+WebElement message = driver.findElement(By.xpath("/html[1]/body[1]/div[1]/div[1]/div[2]/div[1]/div[3]/div[1]/div[1]/div[1]/div[4]"));
 	
+    wait.eWaitForVsibility(driver, 10, message);
     
-	Assert.assertEquals(message.getText(), "Project is now eligible for code review");
+    message.isDisplayed();
+    
+    //assertTrue(selenium.isElementPresent("constant_id"))
+
+    //Assert.assertEquals(message.getText(), "Project is now eligible for code review");
 	
 //	Actions action = new Actions(driver);
 //	 action.moveToElement(codereview).build().perform();
@@ -320,6 +331,12 @@ public WebElement clientlist()
 public void selectpagecount(String page) throws InterruptedException {
 	Select sel = new Select(pagedropdown);
 	sel.selectByVisibleText(page);
+	List<WebElement> clients=driver.findElements(By.xpath("//a[@title='Edit']"));
+	int count=clients.size();
+	
+	
+	
+	
 }
 
 public void selectstatusdrpdwn(String status) {

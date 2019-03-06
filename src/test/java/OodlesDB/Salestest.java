@@ -400,27 +400,13 @@ private static Logger log = LogManager.getLogger(Salestest.class.getName());
 		log.info("Clicked on leads tab");
 		Sl.newlead();
 
-//			log.info("Clicked on leads tab");
-//			
-//			String input=resource.Excelutilities.readData("Sheet1",3,3);
-//			Sl.searchfield().sendKeys(input);
-//			
-//			
-//			Sl.verifylist();
-
-//            Thread.sleep(4000);
-//
-//	        Sl.newlead();
-//			Set handles= driver.getWindowHandles();
-//			System.out.println(handles);
-//			String firstwinhandles = driver.getWindowHandle();
-//			driver.switchTo().window(firstwinhandles);
 
 		log.info("lead added");
+		
+		Sl.searchaddedlead(driver,"Newlead3");
 
 	}
 	
-	@Test(priority=6)
 	public void clickcomment() throws InterruptedException {
 		Landingpage lp = new Landingpage(driver);
 		lp.login();
@@ -447,7 +433,6 @@ private static Logger log = LogManager.getLogger(Salestest.class.getName());
 		Sl.writecomment(Test);
 		Sl.submitcomment().sendKeys(Keys.ENTER);
 	}
-	@Test(priority=6)
 	public void showcolumns() throws InterruptedException {
 		Landingpage lp = new Landingpage(driver);
 		lp.login();
@@ -472,7 +457,6 @@ private static Logger log = LogManager.getLogger(Salestest.class.getName());
 		Sl.showhide();
 	}
 	
-	@Test(priority=6)
 	public void clickcommentonleadspage() throws InterruptedException {
 
 		Landingpage lp = new Landingpage(driver);
@@ -502,7 +486,6 @@ private static Logger log = LogManager.getLogger(Salestest.class.getName());
 		Sl.submitcomment().sendKeys(Keys.ENTER);
 	}
 	
-	@Test(priority=6)
 	public void searchfilter() throws InterruptedException {
 		Landingpage lp = new Landingpage(driver);
 		lp.login();
@@ -524,7 +507,6 @@ private static Logger log = LogManager.getLogger(Salestest.class.getName());
 		log.info("input is entered");
 	}
     
-	@Test(priority=6)
 	public void searchtech() throws InterruptedException {
 		Landingpage lp = new Landingpage(driver);
 		lp.login();
@@ -545,7 +527,6 @@ private static Logger log = LogManager.getLogger(Salestest.class.getName());
 		Sl.searchtech(input);
 	}
 	
-	@Test(priority=2)
 	public void edit() throws InterruptedException {
 		Landingpage lp = new Landingpage(driver);
 		lp.login();
@@ -566,7 +547,6 @@ private static Logger log = LogManager.getLogger(Salestest.class.getName());
 		Sl.editclient();
 	}
 	
-	@Test(priority=3)
 	public void deletelead() throws InterruptedException {
 		Landingpage lp = new Landingpage(driver);
 		lp.login();
@@ -588,7 +568,6 @@ private static Logger log = LogManager.getLogger(Salestest.class.getName());
 
 	}
 	
-	@Test(priority=4)
 	public void viewlead() throws InterruptedException {
 
 		Landingpage lp = new Landingpage(driver);
@@ -608,7 +587,6 @@ private static Logger log = LogManager.getLogger(Salestest.class.getName());
 		Sl.viewlead();
 
 	}
-	@Test(priority=5)
 	public void leadquality() throws InterruptedException {
 		Landingpage lp = new Landingpage(driver);
 		lp.login();
@@ -679,7 +657,7 @@ private static Logger log = LogManager.getLogger(Salestest.class.getName());
 				System.out.println("Exception while taking screenshot " + e.getMessage());
 			}
 		}
-		driver.close();
+		//driver.close();
 
 	}
 

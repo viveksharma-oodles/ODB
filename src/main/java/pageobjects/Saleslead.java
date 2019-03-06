@@ -1,5 +1,6 @@
 package pageobjects;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -258,6 +259,38 @@ public class Saleslead extends Commonelements {
 //		Submitcomment.click();
 //		
 	}
+	
+	
+	public void searchaddedlead(WebDriver driver,String lead){
+	    WebElement table = driver.findElement(By.xpath("//div[@class='scroll']//div//div//table[contains(@class,'dataTable')]"));
+	    List<WebElement> rows = table.findElements(By.tagName("tr"));
+	    List<WebElement> column = table.findElements(By.tagName("td"));
+	    List<String> value = new ArrayList<String>();
+
+	    System.out.println(rows.size());
+
+	        for (int j=0; j<column.size(); j++){
+	           // System.out.println(column.get(j).getText());
+	            value.add(column.get(j).getText());
+	        }
+	        if (value.contains(lead)){
+	           log.info("lead found in table");
+	        }
+	        else{
+	            log.error("lead not present in table");
+	        }
+	}
+//	public boolean searchUsername(WebDriver driver, String username){
+//	    boolean isFound = false;
+//	    List<WebElement> rows = driver.findElements(By.cssSelector("tbody > tr"));
+//	    for(WebElement row : rows){
+//	        if(row.findElement(By.cssSelector("td:nth-of-type(2)").getText.equals(username){
+//	            isFound = true;
+//	            break;
+//	        }
+//	    }
+//	    return isFound;
+//	}
 
 //	public void verifyMonthlygraph()
 //    {

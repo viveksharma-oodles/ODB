@@ -28,6 +28,9 @@ public abstract class Commonelements {
 	@FindBy (xpath="//a[contains(text(),'View Projects')]")
 	WebElement viewProject;
 	
+	@FindBy (xpath="//a[contains(text(),'View Projects')]")
+	WebElement viewaccount;
+	
 	@FindBy (xpath="//a[@class='userHighlighted']")
 	WebElement People;
 	
@@ -88,6 +91,11 @@ public WebElement clickonpeople()
 {
 	return People;
 
+}
+
+public WebElement viewaccount()
+{
+	return viewaccount;
 }
 
 public WebElement clickonblog()

@@ -4,17 +4,21 @@ import org.testng.annotations.Test;
 import java.awt.Robot;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
+import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.AfterTest;
@@ -99,6 +103,8 @@ WebDriver driver;
 			 
 			Thread.sleep(2000);
 			pr.projectoverview();
+			
+			
 		}
 		
 		
@@ -126,7 +132,7 @@ WebDriver driver;
 		}
 		
 		
-		public void salesdocument()
+		public void salesdocument() throws InterruptedException
 		{
 			Landingpage lp=new Landingpage(driver);
 			lp.login();
@@ -146,6 +152,55 @@ WebDriver driver;
 			
 			pr.salesdocument();
 		}
+		
+		
+		public void resourcecount() throws InterruptedException
+		{
+			Landingpage lp=new Landingpage(driver);
+			lp.login();
+			log.info("Login successful");
+			
+			
+			Projects pr=new Projects(driver);
+			
+			//Thread.sleep(15000);
+			WaitStattementLib wait= new WaitStattementLib();
+			wait.eWaitForClickable(driver, 5, pr.clickonproject());
+			
+			pr.clickonproject().click();
+			log.info("Clicked on project");
+			pr.clickonviewproject().click();
+			log.info("Clicked on view project");
+			
+			((JavascriptExecutor)driver).executeScript("arguments[0].click();", pr.resourcecount());
+
+			
+			// Store the current window handle
+			String winHandleBefore = driver.getWindowHandle();
+
+			// Perform the click operation that opens new window
+
+			// Switch to new window opened
+			for(String winHandle : driver.getWindowHandles()){
+			    driver.switchTo().window(winHandle);
+			    
+			    
+			}
+
+			// Perform the actions on new window
+
+			// Close the new window, if that window no more required
+			driver.close();
+
+			// Switch back to original browser (first window)
+			driver.switchTo().window(winHandleBefore);
+
+
+			
+			
+			
+		}
+		
 		public void editproject() throws InterruptedException
 		{
 			Landingpage lp=new Landingpage(driver);
@@ -192,7 +247,7 @@ WebDriver driver;
 			pr.statuschange();
 			
 		}
-		
+		@Test
 		public void Pagination() throws InterruptedException
 		{
 			Landingpage lp=new Landingpage(driver);
@@ -209,12 +264,46 @@ WebDriver driver;
 			log.info("Clicked on view project");
 			
 		pr.selectpagecount("Show 25 per page");
+		
+		
+		if( pr.count==25)
+		{
+			log.info("pagination working fine!!");
+		}
+		else
+		{
+			log.error("pagination not correct");
+		}
 		Thread.sleep(2000);
 		pr.selectpagecount("Show 50 per page");
+		if( pr.count==50)
+		{
+			log.info("pagination working fine!!");
+		}
+		else
+		{
+			log.error("pagination not correct");
+		}
 		Thread.sleep(2000);
 		pr.selectpagecount("Show 100 per page");
+		if( pr.count==100)
+		{
+			log.info("pagination working fine!!");
+		}
+		else
+		{
+			log.error("pagination not correct");
+		}
 		Thread.sleep(2000);
 		pr.selectpagecount("Show 10 per page");
+		if( pr.count==10)
+		{
+			log.info("pagination working fine!!");
+		}
+		else
+		{
+			log.error("pagination not correct");
+		}
 		
 		}
 		
@@ -252,8 +341,8 @@ WebDriver driver;
 			
 		}
 		
-		@Test
-		public void codereview() {
+		
+		public void codereview() throws InterruptedException {
 			
 			Landingpage lp=new Landingpage(driver);
 			lp.login();
