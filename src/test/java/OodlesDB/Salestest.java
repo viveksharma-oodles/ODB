@@ -314,7 +314,7 @@ private static Logger log = LogManager.getLogger(Salestest.class.getName());
 
 	}
 
-	@Test(enabled=false)
+	//@Test(enabled=true)
 	public void verifyPagination() throws InterruptedException {
 
 		Landingpage lp = new Landingpage(driver);
@@ -322,12 +322,19 @@ private static Logger log = LogManager.getLogger(Salestest.class.getName());
 		log.info("Login successful");
 
 		Saleslead Sl = new Saleslead(driver);
-		WaitStattementLib wait=new WaitStattementLib();
-		wait.eWaitForClickable(driver, 5, Sl.saleslead);
-		Sl.clickonsaleslead().click();
+//		WaitStattementLib wait=new WaitStattementLib();
+//		wait.eWaitForClickable(driver, 5, Sl.saleslead);
+		
+		
+		JavascriptExecutor executor = (JavascriptExecutor) driver;
+
+		executor.executeScript("arguments[0].click()", Sl.clickonsaleslead());
+		//Sl.clickonsaleslead().click();
 		log.info("Clicked on SL");
 
-		Sl.clickonlead().click();
+		executor.executeScript("arguments[0].click()", Sl.clickonlead());
+		
+		//Sl.clickonlead().click();
 		log.info("Clicked on lead option");
 
 		Thread.sleep(3000);
@@ -374,7 +381,7 @@ private static Logger log = LogManager.getLogger(Salestest.class.getName());
 		log.info("Pagination working");
 	}
 	
-	@Test(priority=1)
+	//@Test(priority=1)
 	public void verifyaddlead() throws InterruptedException
 
 	{
@@ -382,19 +389,20 @@ private static Logger log = LogManager.getLogger(Salestest.class.getName());
 		lp.login();
 		log.info("Login successful");
 
+		Thread.sleep(2000);
 		
 		Saleslead Sl = new Saleslead(driver);
-		WaitStattementLib wait=new WaitStattementLib();
-		wait.eWaitForClickable(driver, 10, Sl.saleslead);
+//		WaitStattementLib wait=new WaitStattementLib();
+//		wait.eWaitForClickable(driver, 5, Sl.saleslead);
 
-		Sl.clickonsaleslead().click();
+		JavascriptExecutor executor = (JavascriptExecutor) driver;
+
+		executor.executeScript("arguments[0].click()", Sl.clickonsaleslead());
+		//Sl.clickonsaleslead().click();
 		log.info("Clicked on SL");
-//	    Sl.NewLead();
+
 		Sl.clickonlead().click();
 		log.info("Clicked on lead option");
-
-//		JavascriptExecutor executor = (JavascriptExecutor) driver;
-//		executor.executeScript("arguments[0].click()", Sl.leadstab);
 
 		Sl.leadstab().click();
 		log.info("Clicked on leads tab");
@@ -403,10 +411,11 @@ private static Logger log = LogManager.getLogger(Salestest.class.getName());
 
 		log.info("lead added");
 		
-		Sl.searchaddedlead(driver,"Newlead3");
+		//Sl.searchaddedlead(driver,"Newlead3");
 
 	}
 	
+	@Test
 	public void clickcomment() throws InterruptedException {
 		Landingpage lp = new Landingpage(driver);
 		lp.login();
@@ -416,11 +425,16 @@ private static Logger log = LogManager.getLogger(Salestest.class.getName());
 		WaitStattementLib wait=new WaitStattementLib();
 		wait.eWaitForClickable(driver, 5, Sl.saleslead);
 		
+		JavascriptExecutor executor = (JavascriptExecutor) driver;
+
+		executor.executeScript("arguments[0].click()", Sl.clickonsaleslead());
 		
-		Sl.clickonsaleslead().click();
+		//Sl.clickonsaleslead().click();
 		log.info("Clicked on SL");
 
-		Sl.clickonlead().click();
+
+		executor.executeScript("arguments[0].click()", Sl.clickonlead());
+		//Sl.clickonlead().click();
 		log.info("Clicked on lead option");
 
 		JavascriptExecutor jse = (JavascriptExecutor) driver;
@@ -457,6 +471,7 @@ private static Logger log = LogManager.getLogger(Salestest.class.getName());
 		Sl.showhide();
 	}
 	
+	
 	public void clickcommentonleadspage() throws InterruptedException {
 
 		Landingpage lp = new Landingpage(driver);
@@ -486,7 +501,9 @@ private static Logger log = LogManager.getLogger(Salestest.class.getName());
 		Sl.submitcomment().sendKeys(Keys.ENTER);
 	}
 	
+	@Test
 	public void searchfilter() throws InterruptedException {
+		
 		Landingpage lp = new Landingpage(driver);
 		lp.login();
 		log.info("Login successful");
@@ -494,10 +511,17 @@ private static Logger log = LogManager.getLogger(Salestest.class.getName());
 		Saleslead Sl = new Saleslead(driver);
 		WaitStattementLib wait=new WaitStattementLib();
 		wait.eWaitForClickable(driver, 5, Sl.saleslead);
-		Sl.clickonsaleslead().click();
+		
+		JavascriptExecutor executor = (JavascriptExecutor) driver;
+
+		executor.executeScript("arguments[0].click()", Sl.clickonsaleslead());
+		
+		//Sl.clickonsaleslead().click();
 		log.info("Clicked on SL");
 
-		Sl.clickonlead().click();
+		
+		executor.executeScript("arguments[0].click()", Sl.clickonlead());
+		//Sl.clickonlead().click();
 		log.info("Clicked on lead option");
 
 		Sl.leadstab().click();
@@ -507,6 +531,7 @@ private static Logger log = LogManager.getLogger(Salestest.class.getName());
 		log.info("input is entered");
 	}
     
+	@Test
 	public void searchtech() throws InterruptedException {
 		Landingpage lp = new Landingpage(driver);
 		lp.login();
@@ -515,10 +540,16 @@ private static Logger log = LogManager.getLogger(Salestest.class.getName());
 		Saleslead Sl = new Saleslead(driver);
 		WaitStattementLib wait=new WaitStattementLib();
 		wait.eWaitForClickable(driver, 5, Sl.saleslead);
-		Sl.clickonsaleslead().click();
+		
+		JavascriptExecutor executor = (JavascriptExecutor) driver;
+
+		executor.executeScript("arguments[0].click()", Sl.clickonsaleslead());
+		//Sl.clickonsaleslead().click();
 		log.info("Clicked on SL");
 
-		Sl.clickonlead().click();
+		executor.executeScript("arguments[0].click()", Sl.clickonlead());
+
+		//Sl.clickonlead().click();
 		log.info("Clicked on lead option");
 
 		Sl.leadstab().click();
@@ -527,7 +558,9 @@ private static Logger log = LogManager.getLogger(Salestest.class.getName());
 		Sl.searchtech(input);
 	}
 	
-	public void edit() throws InterruptedException {
+	//@Test(priority=2)
+	public void edit()
+			throws InterruptedException {
 		Landingpage lp = new Landingpage(driver);
 		lp.login();
 		log.info("Login successful");
@@ -536,17 +569,25 @@ private static Logger log = LogManager.getLogger(Salestest.class.getName());
 		
 		WaitStattementLib wait=new WaitStattementLib();
 		wait.eWaitForClickable(driver, 5, Sl.saleslead);
-		
+
 		Sl.clickonsaleslead().click();
 		log.info("Clicked on SL");
 
-		Sl.clickonlead().click();
+		//wait.eWaitForClickable(driver, 5, Sl.leadoption);
+		
+		JavascriptExecutor executor = (JavascriptExecutor) driver;
+
+		executor.executeScript("arguments[0].click()", Sl.clickonlead());
+		//Sl.clickonlead().click();
 		log.info("Clicked on lead option");
+
 		Sl.leadstab().click();
 
+		Thread.sleep(2000);
 		Sl.editclient();
 	}
 	
+	@Test(priority=3)
 	public void deletelead() throws InterruptedException {
 		Landingpage lp = new Landingpage(driver);
 		lp.login();
@@ -556,10 +597,16 @@ private static Logger log = LogManager.getLogger(Salestest.class.getName());
 		WaitStattementLib wait=new WaitStattementLib();
 		wait.eWaitForClickable(driver, 5, Sl.saleslead);
 
-		Sl.clickonsaleslead().click();
+		JavascriptExecutor executor = (JavascriptExecutor) driver;
+
+		executor.executeScript("arguments[0].click()", Sl.clickonsaleslead());
+		//Sl.clickonsaleslead().click();
 		log.info("Clicked on SL");
 
-		Sl.clickonlead().click();
+		//JavascriptExecutor executor = (JavascriptExecutor) driver;
+
+		executor.executeScript("arguments[0].click()", Sl.clickonlead());
+		//Sl.clickonlead().click();
 		log.info("Clicked on lead option");
 
 		Sl.leadstab().click();
@@ -568,6 +615,7 @@ private static Logger log = LogManager.getLogger(Salestest.class.getName());
 
 	}
 	
+	@Test
 	public void viewlead() throws InterruptedException {
 
 		Landingpage lp = new Landingpage(driver);
@@ -577,10 +625,16 @@ private static Logger log = LogManager.getLogger(Salestest.class.getName());
 		Saleslead Sl = new Saleslead(driver);
 		WaitStattementLib wait=new WaitStattementLib();
 		wait.eWaitForClickable(driver, 5, Sl.saleslead);
-		Sl.clickonsaleslead().click();
+		
+		JavascriptExecutor executor = (JavascriptExecutor) driver;
+
+		executor.executeScript("arguments[0].click()", Sl.clickonsaleslead());
+		//Sl.clickonsaleslead().click();
 		log.info("Clicked on SL");
 
-		Sl.clickonlead().click();
+		executor.executeScript("arguments[0].click()", Sl.clickonlead());
+
+		//Sl.clickonlead().click();
 		log.info("Clicked on lead option");
 
 		Sl.leadstab().click();
@@ -657,7 +711,7 @@ private static Logger log = LogManager.getLogger(Salestest.class.getName());
 				System.out.println("Exception while taking screenshot " + e.getMessage());
 			}
 		}
-		//driver.close();
+		driver.close();
 
 	}
 

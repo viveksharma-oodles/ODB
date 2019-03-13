@@ -1,41 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="Failed suite [Suite]">
-  <listeners>
-    <listener class-name="resource.MyTransformer"/>
-  </listeners>
-  <test name="Sales lead(failed)">
+<suite name="Failed suite [Default suite]">
+  <test name="Default test(failed)">
     <classes>
-      <class name="OodlesDB.Salestest">
+      <class name="OodlesDB.codereviewtest">
         <methods>
-          <include name="verifyaddlead"/>
-          <include name="initialize"/>
-          <include name="screenShot"/>
-        </methods>
-      </class> <!-- OodlesDB.Salestest -->
-      <class name="OodlesDB.validatetitle">
-        <methods>
-          <include name="teardown"/>
+          <include name="Addschedule"/>
           <include name="initialize"/>
         </methods>
-      </class> <!-- OodlesDB.validatetitle -->
+      </class> <!-- OodlesDB.codereviewtest -->
     </classes>
-  </test> <!-- Sales lead(failed) -->
-  <test name="validatetitle(failed)">
-    <classes>
-      <class name="OodlesDB.Salestest">
-        <methods>
-          <include name="initialize"/>
-          <include name="screenShot"/>
-        </methods>
-      </class> <!-- OodlesDB.Salestest -->
-      <class name="OodlesDB.validatetitle">
-        <methods>
-          <include name="teardown"/>
-          <include name="initialize"/>
-          <include name="navigation2"/>
-        </methods>
-      </class> <!-- OodlesDB.validatetitle -->
-    </classes>
-  </test> <!-- validatetitle(failed) -->
-</suite> <!-- Failed suite [Suite] -->
+  </test> <!-- Default test(failed) -->
+</suite> <!-- Failed suite [Default suite] -->

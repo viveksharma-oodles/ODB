@@ -31,7 +31,7 @@ public class Baseclass {
 	{
 
 	prop=new Properties();
-	FileInputStream fis= new FileInputStream("/home/vivek/eclipse-workspace/OodlesDB/src/main/java/resource/data.properties");
+	FileInputStream fis= new FileInputStream("/home/vivek/git/ODB/src/main/java/resource/data.properties");
      
 	prop.load(fis);
 	String browsername=prop.getProperty("browser");

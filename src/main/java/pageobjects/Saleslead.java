@@ -2,26 +2,19 @@ package pageobjects;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
-import org.apache.log4j.LogManager;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Action;
-import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
-import org.testng.Reporter;
-import org.testng.annotations.Test;
 
 import resource.WaitStattementLib;
 
@@ -188,8 +181,8 @@ public class Saleslead extends Commonelements {
 	@FindBy(xpath = "//input[@placeholder='Search By Tech Invoke']")
 	private WebElement searchtechinvoke;
 
-	@FindBy(xpath = "//div[@class='scroll']//div//div//table[@id='dataTable3']//td[contains(text(),'Newlead')]")
-	private WebElement searchresult;
+//	@FindBy(xpath = "//div[@class='scroll']//div//div//table[@id='dataTable3']//td[contains(text(),'Newlead')]")
+//	private WebElement searchresult;
 
 	@FindBy(xpath = "//tbody//tr[2]//td[9]")
 	WebElement leadquality;
@@ -198,7 +191,7 @@ public class Saleslead extends Commonelements {
 	private WebElement Qualityslider;
 
 	@FindBy(xpath = "//a[contains(text(),'Leads')]")
-	private WebElement leadoption;
+	public WebElement leadoption;
 
 	@FindBy(xpath = "//textarea[@placeholder='Write comment...']")
 	private WebElement Qualitycomment;
@@ -224,7 +217,15 @@ public class Saleslead extends Commonelements {
 	@FindBy(xpath = "/html[1]/body[1]/div[1]/div[1]/div[2]/div[2]/div[3]/div[1]/div[1]/div[1]/div[1]/div[1]/div[5]/div[1]/div[1]/ul[1]/li[4]/a[1]")
 	public WebElement Next2;
 
+	@FindBy(xpath="//tr[contains(@ng-repeat,'leadsInfoList')]")
+	List<WebElement> searchresult;
 	
+	@FindBy(xpath="//div[@class='col-md-6 text-right']//a[@class='ng-binding'][contains(text(),'Next')]")
+	public WebElement Next;
+	
+	@FindBy(xpath="//td[@ng-if='showTechInvoke']")	
+    List<WebElement> searchtech;
+			
 
 	// div[@class='scroll']//div//div//table[@id='dataTable3']
 
@@ -243,12 +244,47 @@ public class Saleslead extends Commonelements {
 
 	public void searchlead(String input) {
 		search.sendKeys(input);
+		
+		// Now, let's gather our search results
+		
+
+		// Finally, we'll loop over the list to verify each result link contains our term
+		for (int i = 0; i < searchresult.size(); i++) {
+			
+			try {
+				Assert.assertTrue(searchresult.get(i).getText().contains(input), "Search result validation failed at instance [ + i + ].");
+
+			}
+			catch(org.openqa.selenium.StaleElementReferenceException ex)
+			{
+				Assert.assertTrue(searchresult.get(i).getText().contains(input), "Search result validation failed at instance [ + i + ].");
+
+			}
+		}
 
 	}
 
 
-	public void searchtech(String input) {
+	public void searchtech(String input) throws InterruptedException {
 		searchtechinvoke.sendKeys(input);
+		
+		Thread.sleep(2000);
+		
+		JavascriptExecutor jse = (JavascriptExecutor) driver;     
+		jse.executeScript("document.querySelector('table th:last-child').scrollIntoView();");
+		
+for (int i = 0; i < searchtech.size(); i++) {
+			
+			try {
+				Assert.assertTrue(searchtech.get(i).getText().contains(input), "Search result validation failed at instance [ + i + ].");
+
+			}
+			catch(org.openqa.selenium.StaleElementReferenceException ex)
+			{
+				Assert.assertTrue(searchtech.get(i).getText().contains(input), "Search result validation failed at instance [ + i + ].");
+
+			}
+}
 	}
 
 	public void writecomment(String write) throws InterruptedException {
@@ -473,21 +509,21 @@ public class Saleslead extends Commonelements {
 
 	}
 
-	public void verifylist() {
-		WebElement searchin = driver.findElement(
-				By.xpath("//div[@class='scroll']//div//div//table[@id='dataTable3']//td[contains(text(),'Newlead')]"));
-		if (resultlist().getText().contains("Newlead")) {
-			log.info("Found result");
-		} else {
-			log.error("result not displaying");
-		}
+//	public void verifylist() {
+//		WebElement searchin = driver.findElement(
+//				By.xpath("//div[@class='scroll']//div//div//table[@id='dataTable3']//td[contains(text(),'Newlead')]"));
+//		if (resultlist().getText().contains("Newlead")) {
+//			log.info("Found result");
+//		} else {
+//			log.error("result not displaying");
+//		}
+//
+//	}
 
-	}
-
-	private WebElement resultlist() {
-		// TODO Auto-generated method stub
-		return searchresult;
-	}
+//	private WebElement resultlist() {
+//		// TODO Auto-generated method stub
+//		return searchresult;
+//	}
 
 	public WebElement submitcomment() {
 		return Submitcomment;
@@ -525,23 +561,47 @@ public class Saleslead extends Commonelements {
 
 	}
 
-	public void pagination() {
+	public void pagination() throws InterruptedException {
 
+		
+		int size= Pagination.size(); 
+		System.out.println(Pagination.size()); 
+		
+		while (true){
+		    
+		    try {
+		     //button = driver.findElement(By.cssSelector("a[action='cancel']"));
+				JavascriptExecutor executor = (JavascriptExecutor) driver;
+				executor.executeScript("window.scrollTo(0, document.body.scrollHeight);");
+
+				executor.executeScript("arguments[0].click()", Next);
+
+				//Next.click();
+		    } catch (NoSuchElementException ex){
+		      break;   // button is missing, exit the loop
+		    }
+		    if (Next.isEnabled() == false) {
+		      break;   // button is hidden, exit the loop
+		    }
+			Thread.sleep(2000); 
+		}
 		// wait until 'loader' loading
 //		List<WebElement> pagination = driver
 //				.findElements(By.xpath("/html[1]/body[1]/div[1]/div[1]/div[2]/div[2]/div[4]/div[1]/div[1]/div[1]/div[1]/div[6]/div[3]/div[1]/ul[1]"));
 		// Thread.sleep(5000);
-		if (Pagination.size() > 0) {
-			System.out.println("pagination exists and size=" + Pagination.size());
-
-			for (int i = 0; i < Pagination.size(); i++) {
-				Pagination.get(i).click();
-				break;
-
-			}
-		} else {
-			System.out.println("pagination not exists");
-		}
+//		if (Pagination.size() > 0) {
+//			System.out.println("pagination exists and size=" + Pagination.size());
+//
+//			for (int i = 0; i < Pagination.size(); i++) {
+//				
+//				Thread.sleep(2000);
+//				Pagination.get(i).click();
+//				break;
+//
+//			}
+//		} else {
+//			System.out.println("pagination not exists");
+//		}
 	}
 
 	public void pagination2() throws InterruptedException {
@@ -709,6 +769,7 @@ public class Saleslead extends Commonelements {
 		JavascriptExecutor js = (JavascriptExecutor) driver;
 		// ((JavascriptExecutor) driver).executeScript("window.scrollBy(0,500)");
 		js.executeScript("arguments[0].scrollIntoView();", edit);
+		
 		Thread.sleep(3000);
 
 		// String delete1="a[title='Delete']";

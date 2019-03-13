@@ -21,15 +21,18 @@ public abstract class Commonelements {
 		PageFactory.initElements(driver, this);
 	}
 	
-	@FindBy (xpath="/html[1]/body[1]/div[1]/div[1]/div[1]/div[1]/div[2]/div[1]/ul[1]/li[4]/a[1]")
+	@FindBy (xpath="//span[@class='project_icon']")
 	public
 	WebElement Project;
 	
 	@FindBy (xpath="//a[contains(text(),'View Projects')]")
 	WebElement viewProject;
 	
-	@FindBy (xpath="//a[contains(text(),'View Projects')]")
+	@FindBy (xpath="//a[contains(text(),'View Accounts')]")
 	WebElement viewaccount;
+	
+	@FindBy (xpath="//a[contains(text(),'Code Review')]")
+	WebElement codereview1;
 	
 	@FindBy (xpath="//a[@class='userHighlighted']")
 	WebElement People;
@@ -114,6 +117,7 @@ public WebElement clickonsaleslead()
 public WebElement clickonlead()
 {
 	
+	
 	return leadoption;
 	
 }
@@ -126,7 +130,10 @@ public WebElement clickonresourcing()
 	return resourcing;
 	
 }
-
+public WebElement codereview1()
+{
+return codereview1;
+}
 public WebElement clickonlogconsole()
 {
 	
