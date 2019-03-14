@@ -5,7 +5,7 @@
     <classes>
       <class name="OodlesDB.codereviewtest">
         <methods>
-          <include name="Addschedule"/>
+          <include name="scheduled"/>
           <include name="initialize"/>
         </methods>
       </class> <!-- OodlesDB.codereviewtest -->
