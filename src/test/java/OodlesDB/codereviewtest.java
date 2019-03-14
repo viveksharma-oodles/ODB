@@ -29,7 +29,7 @@ public class codereviewtest extends Baseclass
 	driver.get(prop.getProperty("url"));
 	
 	}
-	@Test
+	
 	public void Addschedule() throws InterruptedException
 	{
 		Landingpage lp=new Landingpage(driver);
@@ -45,8 +45,71 @@ public class codereviewtest extends Baseclass
 		log.info("Clicked on project");
 		executor.executeScript("arguments[0].click()", cr.codereview1());
 
-		log.info("Clicked on view account");
+		log.info("Clicked on code review");
 		cr.Addschedule();
 		
+	}
+	
+	
+	public void postpone()
+	
+	{
+		Landingpage lp=new Landingpage(driver);
+		lp.login();
+		
+		log.info("Login successful");
+
+		codereview cr = new codereview(driver);
+		JavascriptExecutor executor = (JavascriptExecutor) driver;
+
+		executor.executeScript("arguments[0].click()", cr.clickonproject());
+
+		log.info("Clicked on project");
+		executor.executeScript("arguments[0].click()", cr.codereview1());
+
+		log.info("Clicked on code review");
+		
+		cr.postpone();
+	}
+	
+	
+	public void scheduled()
+	{
+		Landingpage lp=new Landingpage(driver);
+		lp.login();
+		
+		log.info("Login successful");
+
+		codereview cr = new codereview(driver);
+		JavascriptExecutor executor = (JavascriptExecutor) driver;
+
+		executor.executeScript("arguments[0].click()", cr.clickonproject());
+
+		log.info("Clicked on project");
+		executor.executeScript("arguments[0].click()", cr.codereview1());
+
+		log.info("Clicked on code review");
+		cr.scheduled();
+	}
+	
+	@Test
+	public void delete()
+	{
+		Landingpage lp=new Landingpage(driver);
+		lp.login();
+		
+		log.info("Login successful");
+
+		codereview cr = new codereview(driver);
+		JavascriptExecutor executor = (JavascriptExecutor) driver;
+
+		executor.executeScript("arguments[0].click()", cr.clickonproject());
+
+		log.info("Clicked on project");
+		executor.executeScript("arguments[0].click()", cr.codereview1());
+
+		log.info("Clicked on code review");
+		
+		cr.delete();
 	}
 }

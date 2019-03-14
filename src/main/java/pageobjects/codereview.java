@@ -16,6 +16,8 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 
+import resource.WaitStattementLib;
+
 public class codereview extends Commonelements {
 	public int count = 0;
 
@@ -41,6 +43,12 @@ public class codereview extends Commonelements {
 	@FindBy(xpath = "//input[@ng-model='codeReviewSchedule.startDate']")
 	WebElement startdate;
 	
+	@FindBy(xpath = "//a[contains(text(),'29')]")
+	WebElement date1;
+	
+	
+	
+	
 	@FindBy(xpath = "//input[@ng-model='codeReviewSchedule.endDate']")
 	WebElement enddate;
 
@@ -50,7 +58,10 @@ public class codereview extends Commonelements {
 	
 	@FindBy(xpath = "//div[contains(@class,'trash')]")
 	WebElement delete;
+	
+	
 
+	
 	@FindBy(xpath = "//button[contains(text(),'Delete')]")
 	WebElement delete2;
 
@@ -78,6 +89,17 @@ public class codereview extends Commonelements {
 	WebElement meeting1;
 
 
+	@FindBy(xpath = "//li[contains(text(),'Scheduled')]")
+	WebElement scheduled;
+	
+	@FindBy(xpath="//tr[16]//td[9]//a[2]")
+	WebElement emailnotif;
+	
+	@FindBy(xpath="//textarea[@placeholder='Write Message...']")
+	WebElement msg;
+	
+	@FindBy(xpath="//button[contains(text(),'Send mail')]")
+	WebElement sendbutton;
 	
 	
 	@FindBy(xpath = "//input[@placeholder='Email ID']")
@@ -160,13 +182,33 @@ public class codereview extends Commonelements {
 //	    }
 //	}
 //	}
-	public void Addschedule() {
-		AddSchedule.click();
+	public void Addschedule() throws InterruptedException {
+		
+		JavascriptExecutor executor = (JavascriptExecutor) driver;
+
+		executor.executeScript("arguments[0].click()", AddSchedule);
+		
+		WaitStattementLib wait=new WaitStattementLib();
+		wait.eWaitForClickable(driver, 15, SelectProject);
+		//AddSchedule.click();
 		SelectProject.sendKeys("dash");
 		SelectProject.sendKeys(Keys.ARROW_DOWN);
 		SelectProject.sendKeys(Keys.ENTER);
 		title.sendKeys("Frontend");
-		Add.click();
+		startdate.click();
+		
+		executor.executeScript("arguments[0].click()", date1);
+		
+		Thread.sleep(2000);
+		
+		//executor.executeScript("arguments[0].click()", enddate);
+		
+		enddate.click();
+		
+		
+		executor.executeScript("arguments[0].click()", date1);		
+		
+		Add.sendKeys(Keys.ENTER);
 
 //		JavascriptExecutor executor = (JavascriptExecutor) driver;
 //		executor.executeScript("arguments[0].click()", Submit);
@@ -177,9 +219,40 @@ public class codereview extends Commonelements {
 	
 	public void postpone()
 	{
-		Actions act=new Actions(driver);
+		 Actions act=new Actions(driver);
 		 act.dragAndDrop(meeting1, meeting2).build().perform();	
 		
+	}
+	
+	public void scheduled()
+	{
+		
+		JavascriptExecutor executor = (JavascriptExecutor) driver;
+
+		executor.executeScript("arguments[0].click()", scheduled);
+		//scheduled.click();
+		
+		((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", emailnotif);
+		
+		
+		executor.executeScript("arguments[0].click()", emailnotif);
+		//emailnotif.click();
+		
+		msg.sendKeys("Test");
+		
+		sendbutton.click();
+		
+	}
+	
+	public void delete()
+	{
+		
+		Actions act=new Actions(driver);
+		 act.dragAndDrop(meeting1, delete).build().perform();
+		 comment.sendKeys("Delete");
+		 
+		 delete2.click();
+		 
 	}
 	
 		
